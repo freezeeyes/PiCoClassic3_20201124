@@ -1,6 +1,9 @@
 ﻿#include "iodefine.h"
 #include "pccbuzzer.h"
 
+static void buzzer_on(void);
+static void buzzer_off(void);
+
 void init_buzzer(void)
 {
     PORTB.PODR.BIT.B3 = 1;
@@ -32,14 +35,14 @@ void buzzer_wait(void)
     buzzer_off();
 }
 
-void buzzer_on(void)
+static void buzzer_on(void)
 {
     MTU0.TCNT = 0;
     PORTB.PMR.BIT.B3 = 1;
     MTU.TSTR.BIT.CST0 = 1;
 }
 
-void buzzer_off(void)
+static void buzzer_off(void)
 {
     PORTB.PMR.BIT.B3 = 0;
     MTU.TSTR.BIT.CST0 = 0;
